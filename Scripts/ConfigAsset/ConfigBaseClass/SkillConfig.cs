@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace DataClass
+namespace LLExcelConfig
 {
     public class SkillConfig{
         public int id;

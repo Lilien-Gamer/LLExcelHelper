@@ -20,6 +20,7 @@ namespace ExcelProject
 
         //protected virtual string BaseConfigClassCode { get { return null; } }
 
+        protected const string NameSpaceName = "LLExcelConfig";
 
         protected List<string> configNames;
 
@@ -311,7 +312,7 @@ namespace ExcelProject
             get 
             { return $@"
 
-namespace DataClass
+namespace {NameSpaceName}
 {{
     using System;
     using System.Collections.Generic;
@@ -409,7 +410,7 @@ namespace DataClass
                 string code = $@"
 using System.Collections.Generic;                   
 using System;
-namespace DataClass
+namespace {NameSpaceName}
 {{
     public class {fileName}Manager :{BaseConfigClassName}<{fileName}Manager,{fileName}>
     {{
@@ -455,13 +456,13 @@ namespace DataClass
         void GenDataClass(string className)
         {
 
-            string code = @"
+            string code = $@"
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace DataClass
-{
+namespace {NameSpaceName}
+{{
     public class " + className + "{\n";
 
             StringBuilder codeField = new StringBuilder(); ;

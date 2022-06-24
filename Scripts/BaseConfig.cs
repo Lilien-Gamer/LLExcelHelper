@@ -1,6 +1,6 @@
 
 
-namespace DataClass
+namespace LLExcelConfig
 {
     using System;
     using System.Collections.Generic;
