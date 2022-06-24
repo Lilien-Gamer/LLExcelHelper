@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ExcelProject
 {
-    //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
+    
     public abstract class BaseExcelGener: IHasConvertHelper
     {
         protected BaseConvertHelper convertHelper;
@@ -50,6 +50,8 @@ namespace ExcelProject
                 }
             }
         }
+
+        //创建 文件夹
         protected virtual  void TryCreateFolder()
         {
             bool exist = Directory.Exists(configPath);
@@ -107,6 +109,7 @@ namespace ExcelProject
             Console.ReadKey();
         }
 
+        //查找定义 类型 和 名称 的行
         protected bool FindTypeAndNameRow(DataRowCollection rows, out int typeRow, out int nameRow)
         {
             typeRow = -1;
@@ -239,7 +242,7 @@ namespace ExcelProject
                     {
                         InitIgnoreColList(rowCollections[0], columnLength);
 
-                        var typeRowData = rowCollections[typeRow];//返回了第0行的集合
+                        var typeRowData = rowCollections[typeRow];
 
                         var nameRowData = rowCollections[nameRow];
 
