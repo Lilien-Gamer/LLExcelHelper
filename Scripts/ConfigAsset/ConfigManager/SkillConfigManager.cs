@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 namespace DataClass
 {
-    public class SkillConfigManager :BaseConfig<SkillConfigManager,SkillConfig>
+    public class SkillConfigManager :BaseConfigManager<SkillConfigManager,SkillConfig>
     {
         public override void Init( )
         {

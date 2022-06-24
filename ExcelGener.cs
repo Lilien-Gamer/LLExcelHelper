@@ -9,12 +9,12 @@ using System.Text;
 
 namespace ExcelProject
 {
-
+    //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
     public abstract class BaseExcelGener: IHasConvertHelper
     {
         protected BaseConvertHelper convertHelper;
 
-        protected const string BaseConfigClassName = "BaseConfig";
+        protected const string BaseConfigClassName = "BaseConfigManager";
 
         public bool hasError = false;
 
@@ -102,7 +102,7 @@ namespace ExcelProject
         protected  void LoggerError(string content)
         {
             hasError = true;
-            Console.WriteLine(content);
+            Console.WriteLine("\n\n"+content);
             Console.ReadKey();
         }
 
@@ -160,19 +160,31 @@ namespace ExcelProject
 
         public  void GenAllConfigCode()
         {
-            DirectoryInfo folder = new DirectoryInfo(configPath);
-
-            List<string> fileNames = new List<string>();
-
-            foreach (FileInfo file in folder.GetFiles())
+            try
             {
-                fileNames.Add(file.Name);
+                DirectoryInfo folder = new DirectoryInfo(configPath);
+
+                List<string> fileNames = new List<string>();
+
+                foreach (FileInfo file in folder.GetFiles())
+                {
+                    fileNames.Add(file.Name);
+                }
+
+                foreach (var v in fileNames)
+                {
+                    GenSingeConfigCode(v.Replace(".xlsx", ""));
+                }
+            }
+            catch (Exception e)
+            {
+
+                LoggerError($"有异常: {e.Message} \n {e.StackTrace}");
+
+                return;
             }
 
-            foreach (var v in fileNames)
-            {
-                GenSingeConfigCode(v.Replace(".xlsx", ""));
-            }
+
         }
 
         public void GenSingeConfigCode(string fileName)
@@ -282,7 +294,7 @@ namespace ExcelProject
             catch (Exception e)
             {
                 LoggerError($"有异常: {e.Message} \n {e.StackTrace}" );
-               
+                
             }
         }
 
@@ -297,34 +309,34 @@ namespace ExcelProject
         string BaseConfigClassCode 
         {
             get 
-            { return @"
+            { return $@"
 
 namespace DataClass
-{
+{{
     using System;
     using System.Collections.Generic;
          
-    public abstract class BaseConfig<T1,T2> where T1:new()
-    {
+    public abstract class {BaseConfigClassName}<T1,T2> where T1:new()
+    {{
         protected static T1 instance = new T1();
         protected string name;
         public Dictionary<int, T2> allDatas;
         public static T1 Instance()
-        {
+        {{
             return instance;
-        }
-        public ConfigDataManager()
-        {
+        }}
+        public {BaseConfigClassName}()
+        {{
             Init();
             
-        }
+        }}
         public virtual void Init()
-        {
+        {{
            
-        }
-    }
+        }}
+    }}
 
-}
+}}
 
 
 "; 
@@ -361,7 +373,8 @@ namespace DataClass
                     if (i == typeRow || i == nameRow)
                         continue;
 
-                    bool needContinue = TryContinueNextRow(rowCollections[i][0].ToString());
+                    var firstValue = rowCollections[i][0].ToString();
+                    bool needContinue = TryContinueNextRow(firstValue);
 
 
 
@@ -387,7 +400,7 @@ namespace DataClass
 
                         }
                         //dataCode += $"\n    allDatas.Add( config.{names[0]}, config)\n;";
-                        dictionaryCode.Append($"config{dataCount},");
+                        dictionaryCode.Append($"{{ {firstValue} ,config{dataCount} }},");
                     }
 
 
@@ -438,70 +451,7 @@ namespace DataClass
         }
 
 
-        //public static void GenDataAsset(string fileName)
-        //{
-        //    memberType.Clear();
-        //    names.Clear();
-        //    string path =  configPath + fileName + ".xlsx";
-        //    FileStream fileStream = File.Open(path, FileMode.Open, FileAccess.Read);
-        //    IExcelDataReader excelDataReader = ExcelReaderFactory.CreateOpenXmlReader(fileStream);
-
-        //    // 表格数据全部读取到result里
-        //    DataSet result = excelDataReader.AsDataSet();
-        //    var table = result.Tables[0];
-        //    // 获取表格有多少列
-        //    int columns = result.Tables[0].Columns.Count;
-        //    // 获取表格有多少行
-        //    int rows = result.Tables[0].Rows.Count;
-
-
-        //    //取得表格中的数据
-        //    //取得table中所有的行
-        //    var rowCollections = table.Rows;
-
-        //    // 类型
-        //    var rowCollection1 = rowCollections[2];//返回了第1行的集合
-        //                                           // 变量名
-        //    var rowCollection2 = rowCollections[3];
-
-        //    int columnLength = table.Columns.Count; //列数
-        //    int rowLength = rowCollections.Count; //行
-
-        //    for (int i = 0; i < columnLength; i++)
-        //    {
-        //        names.Add(rowCollection2[i].ToString());
-        //    }
-
-        //    string dataCode = "";
-
-        //    for (int i = 4; i < rowLength; i++)
-        //    {
-        //        dataCode += $"\n    config = new {fileName}();";
-        //        for (int j = 0; j < columnLength; j++)
-        //        {
-        //            dataCode += $"\n    config.{names[j]} = {ConvertMyExcel.ConvertString(rowCollection1[j].ToString(), rowCollections[i][j]?.ToString())};";
-        //        }
-        //        dataCode += $"\n    allDatas.Add( config.{names[0]}, config)\n;";
-        //    }
-        //    string code = "using System.Collections.Generic;\nusing System;\nnamespace DataClass\n{\n\n" +
-        //                  $"    public class {fileName}Manager : ConfigDataManager<{fileName}Manager,{fileName}>\n\n" +
-        //                  "    {\n    " +//$"private static {fileName}Manager instance = new {fileName}Manager( );\n"+
-        //                                 //$"    public static {fileName}Manager Instance()"+"{ return instance; } "+
-        //                  "\n    public override void Init( )\n    {\n    name = " + $"\"{fileName}\";\n" +
-        //                  $"    {fileName} config = null;\n    {dataCode}\n"
-        //                  + "    base.Init();\n    }\n}\n}";
-        //    FileStream fs = new FileStream(dataManager + fileName + "Manager.cs", FileMode.Create);//创建文件
-        //    StreamWriter w = new StreamWriter(fs);
-
-        //    w.Write(code);//追加数据
-        //    w.Close();//释放资源,关闭文件  
-        //    fs.Close();
-
-          
-
-        //}
-
-        //C# 需要自己先生成类
+      
         void GenDataClass(string className)
         {
 
@@ -650,6 +600,10 @@ namespace DataClass
         {
             StringBuilder sb = new StringBuilder(str);
             sb.Replace(" ", "");
+            sb.Remove(0, 1);
+            sb.Remove(sb.Length - 1, 1);
+
+            //sb.Replace(" ", "");
             List<int> index = new List<int>();
             for (int i = 0; i < sb.Length; i++)
             {
@@ -660,10 +614,9 @@ namespace DataClass
             {
                 sb.Insert(index[i] + i * (9), "new int[]");
             }
-            sb.Insert(0, '{');
-            sb.Insert(sb.Length - 1, '}');
+            
 
-            return $"new int[][]{sb.ToString()}";
+            return $"new int[][] {{ {sb.ToString()} }}";
 
 
         }
@@ -677,7 +630,11 @@ namespace DataClass
         protected virtual string ToDicKeyIntValueArrayInt(string str)
         {
             StringBuilder sb = new StringBuilder(str);
+
             sb.Replace(" ", "");
+            sb.Remove(0, 1);
+            sb.Remove(sb.Length - 1, 1);
+
             List<int> index = new List<int>();
             for (int i = 0; i < sb.Length; i++)
             {
@@ -691,7 +648,7 @@ namespace DataClass
 
 
 
-            return "new Dictionary<int,int[]>" + sb.ToString() ;
+            return $"new Dictionary<int,int[]>{{ {sb} }}";
         }
 
         protected virtual string ToDicKeyIntValueInt(string str)

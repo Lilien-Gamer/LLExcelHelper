@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 namespace DataClass
 {
-    public class HeroConfigManager :BaseConfig<HeroConfigManager,HeroConfig>
+    public class HeroConfigManager :BaseConfigManager<HeroConfigManager,HeroConfig>
     {
         public override void Init( )
         {

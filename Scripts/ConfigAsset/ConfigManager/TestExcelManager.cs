@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 namespace DataClass
 {
-    public class TestExcelManager :BaseConfig<TestExcelManager,TestExcel>
+    public class TestExcelManager :BaseConfigManager<TestExcelManager,TestExcel>
     {
         public override void Init( )
         {

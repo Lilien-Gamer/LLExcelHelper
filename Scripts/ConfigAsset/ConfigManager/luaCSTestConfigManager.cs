@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 namespace DataClass
 {
-    public class luaCSTestConfigManager :BaseConfig<luaCSTestConfigManager,luaCSTestConfig>
+    public class luaCSTestConfigManager :BaseConfigManager<luaCSTestConfigManager,luaCSTestConfig>
     {
         public override void Init( )
         {

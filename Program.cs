@@ -14,7 +14,7 @@ namespace ExcelProject
             BaseExcelGener ex;
 
 
-            Console.WriteLine("请选择生成lua 或者 C# 代码。\n\n输入1: lua\n\n输入2:C#\n\n");
+            Console.WriteLine("请选择生成lua 或者 C# 代码。\n\n输入1: lua\n\n输入2: C#\n\n");
 
             var inputType = Console.ReadLine();
 
@@ -29,12 +29,12 @@ namespace ExcelProject
             }
             else
             {
-                Console.WriteLine("请输入有效数字，不要输入非法数字：" + inputType);
+                Console.WriteLine("\n\n请输入有效数字，不要输入非法数字：" + inputType);
                 Console.ReadKey();
                 return;
             }
 
-            Console.WriteLine("请问是 单个 excel 文件生成代码， 还是整个文件夹的 excel 文件生成代码？\n\n请注意：Excel文件需要放到和该应用程序所在目录的'Configs'文件夹下!!! \n\n输入1 ： 单个 \n\n输入2： 整个文件夹\n\n");
+            Console.WriteLine("\n\n请问是 单个 excel 文件生成代码， 还是整个文件夹的 excel 文件生成代码？\n\n请注意：Excel文件需要放到和该应用程序所在目录的'Configs'文件夹下!!! \n\n输入1: 单个 \n\n输入2: 整个文件夹\n\n");
 
             
 
@@ -50,18 +50,18 @@ namespace ExcelProject
             }
             else if(input1 == "2")
             {
-                Console.WriteLine($"即将处理路径 ：{CSExcelReader.configPath}下的所有excel配置文件");
+                Console.WriteLine($"\n\n即将处理路径 ：{CSExcelReader.configPath}下的所有excel配置文件\n");
                 ex.GenAllConfigCode();
             }
             else
             {
-                Console.WriteLine("请输入有效数字，不要输入非法数字：" + input1);
+                Console.WriteLine("\n\n请输入有效数字，不要输入非法数字：" + input1);
                 Console.ReadKey();
                 return;
             }
             if(ex.hasError == false)
             {
-                Console.WriteLine("成功生成 excel 配置代码！输入回车后退出。");
+                Console.WriteLine("\n\n成功生成 excel 配置代码！输入回车后退出。");
                 Console.ReadKey();
             }
 
