@@ -19,7 +19,7 @@ namespace DataClass
 
             allDatas = new Dictionary<int, TestExcel>(1){
             
-                config1,
+                { 1 ,config1 },
 
             };
 

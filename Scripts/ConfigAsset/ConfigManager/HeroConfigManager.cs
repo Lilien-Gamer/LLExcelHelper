@@ -28,7 +28,7 @@ namespace DataClass
 
             allDatas = new Dictionary<int, HeroConfig>(2){
             
-                config1,config2,
+                { 1 ,config1 },{ 15 ,config2 },
 
             };
 

@@ -5,7 +5,7 @@ namespace DataClass
     using System;
     using System.Collections.Generic;
          
-    public abstract class BaseConfig<T1,T2> where T1:new()
+    public abstract class BaseConfigManager<T1,T2> where T1:new()
     {
         protected static T1 instance = new T1();
         protected string name;
@@ -14,7 +14,7 @@ namespace DataClass
         {
             return instance;
         }
-        public ConfigDataManager()
+        public BaseConfigManager()
         {
             Init();
             

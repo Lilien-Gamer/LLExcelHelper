@@ -29,7 +29,7 @@ namespace DataClass
 
             allDatas = new Dictionary<int, SkillConfig>(3){
             
-                config1,config2,config3,
+                { 1 ,config1 },{ 2 ,config2 },{ 3 ,config3 },
 
             };
 
