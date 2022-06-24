@@ -32,3 +32,11 @@
 4. 编辑excel时一定要注意格式要求（很简单的 看下文档就知道了）
 5. 运行exe，根据提示输入
 6. 已经在同目录生成代码
+
+##运行时怎么获取到配置数据
+
+C#:  这样的代码: 命名空间.{配置文件名}ConfigManager.Instance().allDatas; 
+
+`var allConfigData = LLExcelConfig.luaCSTestConfigManager.Instance().allDatas;`
+
+lua: `local config = require(文件名)`
