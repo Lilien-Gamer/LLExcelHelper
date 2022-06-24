@@ -25,4 +25,6 @@
 1. 下载exe:[工具的exe](https://github.com/Lilien-Gamer/LLExcelHelper/blob/main/ExcelHelper.exe)
 2. 所有的配置文件放到一个叫"Configs"的文件夹下
 3. 把exe放到Configs同目录
-4. 运行exe，根据提示输入
+4. 编辑excel时一定要注意格式要求（很简单的 看下文档就知道了）
+5. 运行exe，根据提示输入
+6. 已经在同目录生成代码
